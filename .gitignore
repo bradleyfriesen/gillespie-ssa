@@ -1,0 +1,7 @@
+# Build files
+obj/
+*.o
+*.mod
+
+# Executables
+example
