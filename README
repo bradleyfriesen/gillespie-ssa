@@ -1,0 +1,9 @@
+The primary point of this repository is to make a fancier interface for
+different systems and the Gillespie algorithm. It always bugged me during my
+MSc that I had the algorithms working and was discouraged from improving the
+interfaces for fear of changing the code's behaviour.
+
+Once the interfaces are working nicely, I think I'll try playing with the
+fluctuation-dissipation theorem ideas people had, to see if I can make any
+progress there. I will already have the autocovariance ideas ready, I just need
+to figure out the fluctuation-dissipation side of things.

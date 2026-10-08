@@ -29,8 +29,8 @@ subroutine initialize_birth_death(model, parameter_file)
 
 	namelist /parameters/ lambda, beta
 
-	model%n_species = 1
-	model%n_reactions = 2
+	model%n_species = n_species
+	model%n_reactions = n_reactions
 
 	allocate (model%stoich(model%n_species, model%n_reactions))
 

@@ -10,6 +10,7 @@ type :: simulation_t
 	integer :: reaction
 	integer, allocatable :: state(:)
 	integer, allocatable :: reaction_count(:)
+	real(dp), allocatable :: propensity(:)
 end type
 
 
@@ -24,12 +25,14 @@ subroutine initialize_SSA(sim, model, initial_state)
 	
 	allocate(sim%state(model%n_species))
 	allocate(sim%reaction_count(model%n_reactions))
+	allocate(sim%propensity(model%n_reactions))
 	
 	sim%time = 0._dp
 	sim%dt = 0._dp
 	sim%reaction = 0
 	sim%state = initial_state
 	sim%reaction_count = 0
+	sim%propensity = 0
 end subroutine
 
 
@@ -45,6 +48,7 @@ subroutine SSA_roll(sim, model)
 	integer :: i
 	
 	call model%propensity(sim%state, r)
+	sim%propensity = r
 	
 	r_total = sum(r)
 	

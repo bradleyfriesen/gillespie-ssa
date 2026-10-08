@@ -29,8 +29,8 @@ subroutine initialize_homodimer(model, parameter_file)
 
 	namelist /parameters/ lambda, beta
 
-	model%n_species = 1
-	model%n_reactions = 2
+	model%n_species = n_species
+	model%n_reactions = n_reactions
 
 	allocate (model%stoich(model%n_species, model%n_reactions))
 
@@ -52,11 +52,12 @@ subroutine homodimer_propensity(self, state, r)
 	integer, intent(in) :: state(:)
 	real(dp), intent(out) :: r(:)
 
-	associate(x => real(state(1), dp), &
+	associate(x => real(state(:), dp), &
 		lambda => self%params%lambda, &
 		beta => self%params%beta)
+		
 		r(1) = lambda
-		r(2) = x * (x-1._dp) * beta
+		r(2) = x(1) * (x(1)-1._dp) * beta
 	end associate
 
 end subroutine homodimer_propensity
