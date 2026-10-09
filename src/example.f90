@@ -12,6 +12,7 @@ integer, parameter :: event_min = 10**6
 class(model_t), allocatable :: model
 type(simulation_t) :: sim
 type(moments_t) :: moments
+type(flux_statistics_t) :: flux_stats
 
 character(len=:), allocatable :: model_name
 character(len=:), allocatable :: parameter_name
@@ -34,11 +35,15 @@ call initialize_SSA(sim, model, initial_state)
 
 ! Initialize statistics
 call moments%initialize(model%n_species)
+call flux_stats%initialize(model%n_species)
 
 ! Run the algorithm one step at a time
 do while (minval(sim%reaction_count) < event_min)
 	call SSA_roll(sim, model)
+	
 	call moments%update(sim%state, sim%dt)
+	call flux_stats%update(sim%state, sim%propensity, model%stoich, sim%dt)
+	
 	call SSA_update(sim, model)
 end do
 
@@ -47,5 +52,9 @@ print *, "State:           ", sim%state
 print *, "Reaction counts: ", sim%reaction_count
 print *, "Mean(s): ", moments%mean
 print *, "Covariance matrix: ", moments%covariance()
+
+print *, "Mean flux state: ", flux_stats%mean_state
+print *, "Mean creation: ", flux_stats%mean_creation
+print *, "Flux covariance: ", flux_stats%covariance()
 
 end program
