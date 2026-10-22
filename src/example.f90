@@ -54,7 +54,11 @@ print *, "Mean(s): ", moments%mean
 print *, "Covariance matrix: ", moments%covariance()
 
 print *, "Mean flux state: ", flux_stats%mean_state
-print *, "Mean creation: ", flux_stats%mean_creation
+print *, "Mean flux: ", flux_stats%mean_flux
+print *, "Mean degradation flux: ", flux_stats%mean_degradation
 print *, "Flux covariance: ", flux_stats%covariance()
+
+call check_covariance_balance(flux_stats, &
+	model%n_species, model%n_reactions, model%stoich, sim%reaction_count)
 
 end program

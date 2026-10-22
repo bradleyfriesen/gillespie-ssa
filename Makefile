@@ -31,6 +31,7 @@ MODS := \
 	core/model_factory.f90 \
 	core/SSA.f90 \
 	core/statistics.f90 \
+	core/utilities.f90 \
 	models/birth_death/birth_death_model.f90 \
 	models/homodimer/homodimer_model.f90
 
@@ -74,10 +75,13 @@ $(OBJ)/model_factory.o: \
 	$(OBJ)/birth_death_model.o \
 	$(OBJ)/homodimer_model.o
 $(OBJ)/statistics.o: \
-	$(OBJ)/kind_parameters.o
+	$(OBJ)/kind_parameters.o \
+	$(OBJ)/utilities.o
 $(OBJ)/SSA.o: \
 	$(OBJ)/kind_parameters.o \
 	$(OBJ)/model_interface.o
+$(OBJ)/utilities.o: \
+	$(OBJ)/kind_parameters.o
 $(OBJ)/birth_death_model.o: \
 	$(OBJ)/kind_parameters.o \
 	$(OBJ)/model_interface.o
