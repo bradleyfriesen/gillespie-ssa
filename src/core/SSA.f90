@@ -1,8 +1,9 @@
 module SSA
-
 use kind_parameters
 use model_interface
+use random_utils
 implicit none
+
 
 type :: simulation_t
 	real(dp) :: time
@@ -32,7 +33,6 @@ subroutine initialize_SSA(sim, model, initial_state)
 	sim%reaction = 0
 	sim%state = initial_state
 	sim%reaction_count = 0
-	! sim%propensity = 0
 	call model%propensity(sim%state, sim%propensity)
 end subroutine
 
@@ -48,7 +48,8 @@ subroutine SSA_roll(sim, model)
 	real(dp) :: threshold
 	integer :: i
 	
-	call model%propensity(sim%state, r)
+	! call model%propensity(sim%state, r)
+	r = sim%propensity
 	
 	r_total = sum(r)
 	
@@ -56,10 +57,7 @@ subroutine SSA_roll(sim, model)
 		error stop "All reaction rates are zero"
 	end if
 	
-	call random_number(u)
-	u = max(u, tiny(u))
-	
-	sim%dt = -log(u) / r_total
+	call random_exponential(r_total, sim%dt)
 	
 	call random_number(u)
 	threshold = u * r_total
