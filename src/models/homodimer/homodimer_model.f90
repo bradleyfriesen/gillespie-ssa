@@ -82,5 +82,4 @@ subroutine homodimer_print_model(self)
 
 end subroutine homodimer_print_model
 
-
 end module

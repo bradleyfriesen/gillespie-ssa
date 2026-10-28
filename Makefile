@@ -27,13 +27,18 @@ LDLIBS :=
 MODS := \
 	kind_parameters.f90 \
 	core/command_line.f90 \
+	core/kinematics.f90 \
 	core/model_interface.f90 \
 	core/model_factory.f90 \
+	core/random_utils.f90 \
 	core/SSA.f90 \
 	core/statistics.f90 \
 	core/utilities.f90 \
 	models/birth_death/birth_death_model.f90 \
-	models/homodimer/homodimer_model.f90
+	models/brusselator/brusselator_model.f90 \
+	models/gene_expression/gene_expression_model.f90 \
+	models/homodimer/homodimer_model.f90 \
+	models/oscillating/oscillating_model.f90
 
 PROGS := \
 	example.f90
@@ -68,26 +73,48 @@ $(PROGOBJS):$(MODOBJS)
 $(OBJ)/kind_parameters.o:
 $(OBJ)/command_line.o: \
 	$(OBJ)/model_factory.o
+$(OBJ)/kinetics.o: \
+	$(OBJ)/kind_parameters.o \
+	$(OBJ)/utilities.o
 $(OBJ)/model_interface.o: \
 	$(OBJ)/kind_parameters.o
 $(OBJ)/model_factory.o: \
 	$(OBJ)/model_interface.o \
 	$(OBJ)/birth_death_model.o \
-	$(OBJ)/homodimer_model.o
+	$(OBJ)/brusselator_model.o \
+	$(OBJ)/gene_expression_model.o \
+	$(OBJ)/homodimer_model.o \
+	$(OBJ)/oscillating_model.o
+$(OBJ)/random_utils.o: \
+	$(OBJ)/kind_parameters.o
 $(OBJ)/statistics.o: \
 	$(OBJ)/kind_parameters.o \
 	$(OBJ)/utilities.o
 $(OBJ)/SSA.o: \
 	$(OBJ)/kind_parameters.o \
-	$(OBJ)/model_interface.o
+	$(OBJ)/model_interface.o \
+	$(OBJ)/random_utils.o
 $(OBJ)/utilities.o: \
 	$(OBJ)/kind_parameters.o
+
+# Models
 $(OBJ)/birth_death_model.o: \
+	$(OBJ)/kind_parameters.o \
+	$(OBJ)/model_interface.o
+$(OBJ)/brusselator_model.o: \
+	$(OBJ)/kind_parameters.o \
+	$(OBJ)/model_interface.o
+$(OBJ)/gene_expression_model.o: \
 	$(OBJ)/kind_parameters.o \
 	$(OBJ)/model_interface.o
 $(OBJ)/homodimer_model.o: \
 	$(OBJ)/kind_parameters.o \
 	$(OBJ)/model_interface.o
+$(OBJ)/oscillating_model.o: \
+	$(OBJ)/kind_parameters.o \
+	$(OBJ)/model_interface.o \
+	$(OBJ)/kinematics.o
+
 
 # Clean up build files
 clean:

@@ -20,6 +20,10 @@ character(len=:), allocatable :: parameter_name
 integer :: i
 integer, allocatable :: initial_state(:)
 
+
+! Set the seed
+call initialize_random()
+
 ! Command line arguments
 call get_model_and_parameters(model_name, parameter_name)
 
@@ -48,7 +52,7 @@ do while (minval(sim%reaction_count) < event_min)
 end do
 
 print *, "Simulation time: ", sim%time
-print *, "State:           ", sim%state
+! print *, "State:           ", sim%state
 print *, "Reaction counts: ", sim%reaction_count
 print *, "Mean(s): ", moments%mean
 print *, "Covariance matrix: ", moments%covariance()
