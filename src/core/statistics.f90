@@ -198,7 +198,7 @@ subroutine check_covariance_balance(flux, n_species, n_reactions, stoich, n_even
 	! Calculate correlation/"drift" and diffusion matrix
 	do i = 1, n_species
 	do j = 1, n_species
-		U(i, j) = cov(i, j) / flux_pm(i) / flux%mean_state(j) / tau(j)
+		U(i, j) = cov(i, j) / flux_pm(i) / flux%mean_state(j) / tau(i)
 		D(i, j) = S(i, j) / flux%mean_state(j) / tau(i) &
 			+ S(j, i) / flux%mean_state(i) / tau(j)
 	end do
@@ -215,7 +215,7 @@ subroutine check_covariance_balance(flux, n_species, n_reactions, stoich, n_even
 	write(*,'(*(A20))') "D(ij)==0","i", "j", "Relative change", "U(ij)+U(ji)", "D(ij)"
 	do i = 1, n_species
 	do j = 1, n_species
-		if (D(i,j) > eps) then
+		if (abs(D(i,j)) > eps) then
 			rel_change = relative_change(U(i, j) + U(j, i), D(i, j))
 			write(*,'(A20,2(I20),3(G20.12))') "FALSE", i, j, rel_change, U(i, j) + U(j, i), D(i, j)
 		else
