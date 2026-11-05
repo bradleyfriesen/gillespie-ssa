@@ -28,7 +28,7 @@ call initialize_random()
 call get_model_and_parameters(model_name, parameter_name)
 
 ! Make the model
-call create_model(trim(model_name), trim(parameter_name), model)
+call create_model(model_name, parameter_name, model)
 ! Output model parameters for human
 call model%print_model()
 
@@ -55,12 +55,12 @@ print *, "Simulation time: ", sim%time
 ! print *, "State:           ", sim%state
 print *, "Reaction counts: ", sim%reaction_count
 print *, "Mean(s): ", moments%mean
-print *, "Covariance matrix: ", moments%covariance()
+! print *, "Covariance matrix: ", moments%covariance()
 
-print *, "Mean flux state: ", flux_stats%mean_state
-print *, "Mean flux: ", flux_stats%mean_flux
-print *, "Mean degradation flux: ", flux_stats%mean_degradation
-print *, "Flux covariance: ", flux_stats%covariance()
+! print *, "Mean flux state: ", flux_stats%mean_state
+! print *, "Mean flux: ", flux_stats%mean_flux
+! print *, "Mean degradation flux: ", flux_stats%mean_degradation
+! print *, "Flux covariance: ", flux_stats%covariance()
 
 call check_covariance_balance(flux_stats, &
 	model%n_species, model%n_reactions, model%stoich, sim%reaction_count)

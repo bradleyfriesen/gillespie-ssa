@@ -204,23 +204,24 @@ subroutine check_covariance_balance(flux, n_species, n_reactions, stoich, n_even
 	end do
 	end do
 
-	print *, "r_avg: ", r_avg
-	print *, "tau: ", tau
-	print *, "S: ", S
-	print *, "U: ", U
-	print *, "D: ", D
+	! Debugging output
+	! print *, "r_avg: ", r_avg
+	! print *, "tau: ", tau
+	! print *, "S: ", S
+	! print *, "U: ", U
+	! print *, "D: ", D
 	
 	! Output results
 	write(*,*) "relative change between U(i,j)+U(j,i) and D(i,j), or U(i,j) and -U(i,j) if D(i,j)==0:"
 	write(*,'(*(A20))') "D(ij)==0","i", "j", "Relative change", "U(ij)+U(ji)", "D(ij)"
-	do i = 1, n_species
 	do j = 1, n_species
+	do i = 1, n_species
 		if (abs(D(i,j)) > eps) then
 			rel_change = relative_change(U(i, j) + U(j, i), D(i, j))
-			write(*,'(A20,2(I20),3(G20.12))') "FALSE", i, j, rel_change, U(i, j) + U(j, i), D(i, j)
+			write(*,'(A20,2(I20),3(ES20.12))') "FALSE", i, j, rel_change, U(i, j) + U(j, i), D(i, j)
 		else
 			rel_change = relative_change(U(i, j), -U(j, i))
-			write(*,'(A20,2(I20),*(G20.12))') "TRUE", i, j, rel_change, U(i, j), -U(j, i)
+			write(*,'(A20,2(I20),*(ES20.12))') "TRUE", i, j, rel_change, U(i, j), -U(j, i)
 		end if
 	end do
 	end do
