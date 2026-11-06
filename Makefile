@@ -27,6 +27,7 @@ LDLIBS :=
 MODS := \
 	kind_parameters.f90 \
 	core/command_line.f90 \
+	core/correlation.f90 \
 	core/kinematics.f90 \
 	core/model_interface.f90 \
 	core/model_factory.f90 \
@@ -41,7 +42,8 @@ MODS := \
 	models/oscillating/oscillating_model.f90
 
 PROGS := \
-	example.f90
+	example.f90 \
+	test_correlation.f90
 
 MODOBJS := $(addprefix $(OBJ)/,$(notdir $(MODS:.f90=.o)))
 PROGOBJS := $(addprefix $(OBJ)/,$(notdir $(PROGS:.f90=.o)))
@@ -73,6 +75,8 @@ $(PROGOBJS):$(MODOBJS)
 $(OBJ)/kind_parameters.o:
 $(OBJ)/command_line.o: \
 	$(OBJ)/model_factory.o
+$(OBJ)/correlation.o: \
+	$(OBJ)/kind_parameters.o
 $(OBJ)/kinetics.o: \
 	$(OBJ)/kind_parameters.o \
 	$(OBJ)/utilities.o

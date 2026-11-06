@@ -12,7 +12,8 @@ subroutine get_model_and_parameters(model_name, parameter_file)
 	
 	if (command_argument_count() /= 2) then
 		print *, "Usage:"
-		print *, "./a.out MODEL PARAMSET"
+		print *, "./a.out MODEL_NAME PARAMETER_FILE_PATH"
+		print *, ""
 		call list_models()
 		error stop
 	end if
