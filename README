@@ -1,6 +1,6 @@
 The primary point of this repository is to make a fancier interface for
 different systems and the Gillespie algorithm. It always bugged me during my
-MSc that I had the algorithms working and was discouraged from improving the
+MSc that I had the algorithms working and never got arond to improving the
 interfaces for fear of changing the code's behaviour.
 
 Once the interfaces are working nicely, I think I'll try playing with the
